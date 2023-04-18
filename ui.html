@@ -1,0 +1,136 @@
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="./main.css">
+  <title>Mutable Slots</title>
+  <style>
+    * {
+      padding: none;
+      margin: none;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #111;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn:hover {
+      cursor: pointer;
+      background-color: #000;
+      color: #fff;
+      border: 2px dashed #56c0f5;
+      box-sizing: border-box;
+    }
+
+    .btn {
+      background-color: #56c0f5;
+      color: #000;
+      border: none;
+      padding: 15px 0;
+      font-size: 14px;
+      font-weight: bold;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .heading {
+      color: #fff;
+      padding: 20px 0;
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      background-color: #000;
+      color: #fff;
+      border: 2px dashed #56c0f5;
+      box-sizing: border-box;
+    }
+
+    .container,
+    .layout {
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    .adjustContainer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+    }
+  </style>
+</head>
+<div class="container">
+  <h2 class="heading"> ◇ Grid Slots</h2>
+
+  <div class="layout">
+    <div id="create-slot" class="btn"><span>◇</span> Create Slot Component</div>
+    <div id="create-slot-instance" class="btn">◇ Create Slot Instance</div>
+    <div id="create-horizontal-slots" class="btn">◇ Generate Horizontal Slots</div>
+    <div id="create-vertical-slots" class="btn">◇ Generate Vertical Slots</div>
+    <div class="adjustContainer">
+      <div id="add-slot" class="btn ">Add Slot</div>
+      <div id="remove-slot" class="btn ">Remove Slot</div>
+    </div>
+  </div>
+
+  <img src="./images/unicorn.svg">
+
+</div>
+
+
+<script>
+  document.getElementById('create-slot').onclick = () => {
+    parent.postMessage({
+      pluginMessage: {
+        type: 'create-slot'
+      }
+    }, '*')
+  }
+
+  document.getElementById('create-slot-instance').onclick = () => {
+    parent.postMessage({
+      pluginMessage: {
+        type: 'create-slot-instance'
+      }
+    }, '*')
+  }
+
+  document.getElementById('create-horizontal-slots').onclick = () => {
+    parent.postMessage({
+      pluginMessage: {
+        type: 'create-horizontal-slots'
+      }
+    }, '*')
+  }
+
+  document.getElementById('create-vertical-slots').onclick = () => {
+    parent.postMessage({
+      pluginMessage: {
+        type: 'create-vertical-slots'
+      }
+    }, '*')
+  }
+
+  document.getElementById('add-slot').onclick = () => {
+    parent.postMessage({
+      pluginMessage: {
+        type: 'add-slot'
+      }
+    }, '*')
+  }
+
+  document.getElementById('remove-slot').onclick = () => {
+    parent.postMessage({
+      pluginMessage: {
+        type: 'remove-slot'
+      }
+    }, '*')
+  }
+</script>
