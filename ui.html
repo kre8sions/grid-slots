@@ -2,7 +2,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="./main.css">
-  <title>Mutable Slots</title>
+  <title>Grid Slots</title>
   <style>
     * {
       padding: none;
@@ -28,14 +28,15 @@
       color: #000;
       border: none;
       padding: 15px 0;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: bold;
       width: 100%;
       display: flex;
       justify-content: center;
       align-items: center;
       text-align: center;
-      transition: all 0.3s ease;
+      transition: all 0.1s ease;
+      border: 2px solid black;
     }
 
     .heading {
@@ -70,50 +71,30 @@
   <h2 class="heading"> ◇ Grid Slots</h2>
 
   <div class="layout">
-    <div id="create-slot" class="btn"><span>◇</span> Create Slot Component</div>
-    <div id="create-slot-instance" class="btn">◇ Create Slot Instance</div>
-    <div id="create-horizontal-slots" class="btn">◇ Generate Horizontal Slots</div>
-    <div id="create-vertical-slots" class="btn">◇ Generate Vertical Slots</div>
+    <div id="create-slots" class="btn">◇ Generate Slots</div>
     <div class="adjustContainer">
-      <div id="add-slot" class="btn ">Add Slot</div>
-      <div id="remove-slot" class="btn ">Remove Slot</div>
+      <div id="add-slot" class="btn ">( + ) Slot</div>
+      <div id="remove-slot" class="btn ">( - ) Slot</div>
     </div>
   </div>
+  <div class="container">
+    <p style="color: #fff; text-align: center; font-size: 14px; margin-top: 20px;">Made with ❤️</p>
 
-  <img src="./images/unicorn.svg">
+    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path fill-rule="evenodd" clip-rule="evenodd"
+        d="M33.3638 8.77952L40 0L30.8803 6.42062L30.2609 5.8323C29.9854 5.57061 29.6532 5.38595 29.2958 5.29098V2.89853H28.169L27.0423 5.21735H23.662C22.8108 5.21735 22.0325 5.71078 21.6496 6.4925L19.3803 3.38028L16.6761 8.78873L19.3803 9.87042H15.7746V14.738H18.4789L15.7997 16.8814L10.4906 17.4017C10.3714 17.4133 10.2545 17.4346 10.1408 17.4648L0 17.9709V20.8695L2.25352 24.3477L0.56338 30.7245L3.38028 33.0433L5.71405 27.2799C5.78327 27.5397 5.89689 27.7886 6.05356 28.0143L8.14205 31.0229L5.80715 36.7891C5.51735 37.5048 5.59433 38.3221 6.01228 38.9672C6.43023 39.6123 7.13385 39.9998 7.88732 39.9998H10.7042C11.4577 39.9998 12.1613 39.6123 12.5793 38.9672L13.9253 36.8897L14.1152 38.0622C14.2963 39.1803 15.2364 39.9998 16.338 39.9998H18.0282C19.2002 39.9998 20.1766 39.0754 20.2739 37.8735L20.6995 32.6178L21.7752 32.3719L22.5579 38.0089C22.7165 39.1513 23.6673 39.9998 24.7887 39.9998H28.1455C28.1504 39.9999 28.1553 40 28.1602 40C28.1639 40 28.1677 40 28.1714 40L28.19 39.9998H30.9859C31.665 39.9998 32.3079 39.6846 32.7358 39.142C33.1637 38.5993 33.331 37.8871 33.1911 37.2033L31.1568 27.2602L32.7456 25.2165C33.2947 24.5103 33.3946 23.5399 33.0015 22.731L30.7315 18.0594L34.3489 19.052C35.3822 19.3356 36.4669 18.8328 36.9452 17.8485L38.0719 15.5297C38.5206 14.6063 38.322 13.489 37.5849 12.7888L33.3638 8.77952ZM29.1041 37.681H30.9859L28.7324 26.6665L30.9859 23.768L26.4789 14.4927L34.9296 16.8115L36.0563 14.4927L28.7324 7.53619L25.9155 7.53619L23.662 7.53618L20.8451 13.3333L22.5352 18.5506L10.7042 19.71L7.88732 26.6665L10.7042 30.7245L7.88732 37.681H10.5326L17.0908 27.5587C17.436 27.0259 18.1355 26.8819 18.6533 27.2371C19.1711 27.5923 19.311 28.3121 18.9658 28.8449L15.7186 33.8569L16.338 37.681H18.0282L18.5915 30.7245L23.662 29.5651L24.7887 37.681H26.8113L25.3714 29.7787C25.2567 29.1494 25.6596 28.5435 26.2712 28.4255C26.8829 28.3075 27.4716 28.722 27.5863 29.3514L29.1041 37.681ZM28.169 11.2676H29.2958V12.427H28.169V11.2676Z"
+        fill="#56C0F5" />
+    </svg>
+  </div>
 
 </div>
 
 
 <script>
-  document.getElementById('create-slot').onclick = () => {
+  document.getElementById('create-slots').onclick = () => {
     parent.postMessage({
       pluginMessage: {
-        type: 'create-slot'
-      }
-    }, '*')
-  }
-
-  document.getElementById('create-slot-instance').onclick = () => {
-    parent.postMessage({
-      pluginMessage: {
-        type: 'create-slot-instance'
-      }
-    }, '*')
-  }
-
-  document.getElementById('create-horizontal-slots').onclick = () => {
-    parent.postMessage({
-      pluginMessage: {
-        type: 'create-horizontal-slots'
-      }
-    }, '*')
-  }
-
-  document.getElementById('create-vertical-slots').onclick = () => {
-    parent.postMessage({
-      pluginMessage: {
-        type: 'create-vertical-slots'
+        type: 'create-slots'
       }
     }, '*')
   }

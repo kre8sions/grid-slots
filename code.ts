@@ -12,28 +12,20 @@ figma.loadFontAsync({ family: "NVIDIA Sans", style: "Regular" })
 
 let h1,h2,h3,h4,h5,h6,h7,h8,h9,h10,h11,h12,v1,v2,v3,v4,v5,v6,v7,v8,v9,v10,v11,v12;
 
-figma.ui.resize(300,700);
+figma.ui.resize(300,470);
 figma.ui.onmessage = msg => {
 
   // One way of distinguishing between different types of messages sent from
   // your HTML page is to use an object with a "type" property like this.
 
-  if (msg.type === 'create-slot-instance') {
-    createSlotInstance();
 
-  }
   //Create a slot component
-  if (msg.type === 'create-slot') {
-    createSlot();
+  
+  if (msg.type === 'create-slots') {
+    createSlots();
   }
 
-  if (msg.type === 'create-horizontal-slots') {
-    createHorizontalSlots();
-  }
-
-  if (msg.type === 'create-vertical-slots') {
-    createVerticalSlots();
-  }
+ 
 
   if (msg.type === 'add-slot'){
     const selection = figma.currentPage.selection as InstanceNode[];
@@ -67,8 +59,8 @@ figma.ui.onmessage = msg => {
 };
 
 function createSlot(){
-  const section = figma.createSection();
-  section.name = "Slot Component";
+  // const section = figma.createSection();
+  // section.name = "Grid Slots";
   const slot = figma.createComponent();
   const label = figma.createText();
   label.characters = "◇\nSwap";
@@ -89,9 +81,10 @@ function createSlot(){
   slot.counterAxisSizingMode = "AUTO";
   slot.primaryAxisSizingMode = "AUTO";
   slot.fills = [{type: 'SOLID', color: {r: .776, g: .792, b: .816}}];
-  section.appendChild(slot);
-  figma.currentPage.selection = [slot];
-  figma.viewport.scrollAndZoomIntoView([section]);
+  // section.appendChild(slot);
+  // figma.currentPage.selection = [slot];
+  // figma.viewport.scrollAndZoomIntoView([section]);
+  
 }
 
 function createSlotInstance(){
@@ -103,72 +96,65 @@ function createSlotInstance(){
 
 
 
-function createHorizontalSlots(){
-  const section = figma.createSection();
-  section.name = "Horizontal Slots";
-  const slotInstance = createSlotInstance()
+function createSlots(){
+  createSlot()
+  // const section = figma.currentPage.findOne(n=>(n.name === "Grid Slots"));
+  // section.name = "Grid Slots";
+  // section.appendChild(core)
   for (let count = 1; count <= 12; count++) {
     if (count > 1) {
       const hx1 = figma.currentPage.findOne(n => n.name === "horizontalx" + (count - 1) && n.type === "COMPONENT") as ComponentNode;
       const multiSlot = hx1.clone()
       multiSlot.name = "horizontalx" + count;
       multiSlot.appendChild(hx1.children[0].clone());
-      section.appendChild(multiSlot);
+      // section.appendChild(multiSlot);
+      const componentV = multiSlot.clone()
+      // section.appendChild(componentV);
+      componentV.name = "verticalx" + count;
+      componentV.layoutMode = "VERTICAL";
+      componentV.counterAxisSizingMode = "AUTO";
+      componentV.x = componentV.width * (count + 1)
+      componentV.y = 0
+      multiSlot.x = 0
       multiSlot.y = multiSlot.height * (count + 1);
     } else {
+      const slotInstanceH = createSlotInstance()
       const component = figma.createComponent();
       component.name = "horizontalx" + count;
       component.layoutMode = "HORIZONTAL";
       component.counterAxisSizingMode = "AUTO";
-      component.appendChild(slotInstance);
-      section.appendChild(component);
+      component.appendChild(slotInstanceH);
+      // section.appendChild(component);
+      const componentV = component.clone()
+      // section.appendChild(componentV);
+      componentV.name = "verticalx" + count;
+      componentV.layoutMode = "VERTICAL";
+      componentV.counterAxisSizingMode = "AUTO";
+      componentV.x = componentV.width * (count + 1)
       component.y = component.height * (count + 1);
     }
   }
-  for (let count = 1; count <= 12; count++) {
-    if (count > 1) {
-      const hx1 = figma.currentPage.findOne(n => n.name === "verticalx" + (count - 1) && n.type === "COMPONENT") as ComponentNode;
-      const multiSlot = hx1.clone()
-      multiSlot.name = "verticalx" + count;
-      multiSlot.appendChild(hx1.children[0].clone());
-      section.appendChild(multiSlot);
-      multiSlot.x = multiSlot.height * (count + 1);
-    } else {
-      const component = figma.createComponent();
-      component.name = "verticalx" + count;
-      component.layoutMode = "VERTICAL";
-      component.counterAxisSizingMode = "AUTO";
-      component.appendChild(slotInstance);
-      section.appendChild(component);
-      component.x = component.height * (count + 1);
-    }
-  }
-}
+  // for (let count = 1; count <= 12; count++) {
+  //   if (count > 1) {
+  //     const hx1 = figma.currentPage.findOne(n => n.name === "verticalx" + (count - 1) && n.type === "COMPONENT") as ComponentNode;
+  //     const multiSlot = hx1.clone()
+  //     multiSlot.name = "verticalx" + count;
+  //     multiSlot.appendChild(hx1.children[0].clone());
+  //     section.appendChild(multiSlot);
+  //     multiSlot.x = multiSlot.width * (count + 1);
+  //   } else {
+  //     const slotInstanceV = createSlotInstance()
+  //     const component = figma.createComponent();
+  //     component.name = "verticalx" + count;
+  //     component.layoutMode = "VERTICAL";
+  //     component.counterAxisSizingMode = "AUTO";
+  //     component.appendChild(slotInstanceV);
+  //     section.appendChild(component);
+  //     component.x = component.width * (count + 1);
+  //   }
+  // }
 
-function createVerticalSlots(){
-  const section = figma.createSection();
-  section.name = "Vertical Slots";
-  const slotInstance = createSlotInstance()
-   for (let count = 1; count <= 12; count++) {
-    if (count > 1) {
-      const vx1 = figma.currentPage.findOne(n => n.name === "verticalx" + (count) && n.type === "COMPONENT") as ComponentNode;
-      const multiSlot = vx1.clone()
-      console.log(multiSlot)
-      multiSlot.name = "verticalx" + count;
-      console.log(multiSlot.name)
-      multiSlot.appendChild(vx1.children[0].clone());
-      const section = figma.currentPage.findOne(n => n.name === "Vertical Slots" && n.type === "SECTION") as SectionNode;
-      section.appendChild(multiSlot);
-      multiSlot.x = multiSlot.width * (count + 1);
-    } else {
-      const component = figma.createComponent();
-      component.name = "verticalx" + count;
-      component.layoutMode = "VERTICAL";
-      component.counterAxisSizingMode = "AUTO";
-      component.appendChild(slotInstance);
-      const section = figma.currentPage.findOne(n => n.name === "Vertical Slots" && n.type === "SECTION") as SectionNode;
-      section.appendChild(component);
-      component.x = component.width * (count + 1);
-    }
-  }
+  let remainingSlot = figma.currentPage.findOne(n=> n.name === "Slot"&& n.type === "INSTANCE")
+  
+
 }
